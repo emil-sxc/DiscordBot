@@ -10,7 +10,11 @@ const {
 } = require("discord.js");
 
 const client = new Client({
-    intents: [GatewayIntentBits.Guilds]
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent
+    ]
 });
 
 // SLASH COMMANDS
@@ -75,6 +79,16 @@ client.on("interactionCreate", async interaction => {
         await interaction.reply({
             embeds: [embed]
         });
+    }
+
+});
+
+client.on("messageCreate", async message => {
+
+    if (message.author.bot) return;
+
+    if (message.content === "!ping") {
+        message.reply("🏓 Pong!");
     }
 
 });
